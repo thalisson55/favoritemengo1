@@ -13,7 +13,7 @@ function App() {
         <h2>O Palmeiras não tem mundial </h2>
       </main>
       {/* <Conteudo /> */}
-      {/* <CadastroUsuario /> */}
+      <CadastroUsuario />
       <TelaLogin />
       <Rodape />
     </div>
