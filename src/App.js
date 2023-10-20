@@ -13,8 +13,9 @@ function App() {
         <h2>O Palmeiras não tem mundial </h2>
       </main>
       {/* <Conteudo /> */}
-      <CadastroUsuario />
       <TelaLogin />
+      <CadastroUsuario />
+
       <Rodape />
     </div>
   );

@@ -1,95 +1,99 @@
 import React, { useState } from "react";
-import styles from "../Conteudo/Conteudo.module.css";
+import styles from "./Cadastro.module.css";
 
 const CadastroUsuario = () => {
-  const [nomePessoa, setnomePessoa] = useState("");
-  const [emailSite, setemailSite] = useState("");
-  const [nomeSite, setnomeSite] = useState("");
+  const [nomePessoa, setNomePessoa] = useState("");
+  const [emailSite, setEmailSite] = useState("");
+  const [nomeSite, setNomeSite] = useState("");
   const [senha, setSenha] = useState("");
   const [confSenha, setConfSenha] = useState("");
+  const [cadastros, setCadastros] = useState([]);
 
-  let favoritos = [];
+  const handleCadastro = () => {
+    if (senha !== confSenha) {
+      alert("As senhas não coincidem.");
+      return;
+    }
 
-  function salvarFavorito() {
-    console.log("favoritos>>>:", favoritos);
-    console.log("estados>>>:", {
+    const novoCadastro = {
       nomePessoa,
       emailSite,
       nomeSite,
       senha,
-      confSenha,
-    });
-    favoritos = [
-      ...favoritos,
-      { setnomePessoa, setemailSite, setnomeSite, setSenha, setConfSenha },
-    ];
-    console.log("favoritos 2>>>:", favoritos);
-    localStorage.setItem(
-      "favorito",
-      JSON.stringify({
-        nomePessoa,
-        setemailSite,
-        nomeSite,
-        setSenha,
-        setConfSenha,
-      })
-    );
-  }
+    };
+
+    setCadastros([...cadastros, novoCadastro]);
+
+    setNomePessoa("");
+    setEmailSite("");
+    setNomeSite("");
+    setSenha("");
+    setConfSenha("");
+  };
+
+  const salvarFavorito = () => {
+    localStorage.setItem("cadastros", JSON.stringify(cadastros));
+    alert("Cadastro realizado com sucesso!");
+  };
+
   return (
-    <>
-      {favoritos}
+    <div>
       <div className={styles.area}>
         <form className={styles.formulario}>
-          <label>Email</label>
-          <h1> {emailSite} </h1>
-
-          <input
-            name="email"
-            onChange={(evento) => {
-              setemailSite(evento.target.value);
-            }}
-          ></input>
-          <br />
           <label>Nome</label>
-          <h1> {nomePessoa} </h1>
-
+          <br />
           <input
             name="nomePessoa"
-            onChange={(evento) => {
-              setnomePessoa(evento.target.value);
-            }}
-          ></input>
+            value={nomePessoa}
+            onChange={(evento) => setNomePessoa(evento.target.value)}
+          />
           <br />
-          <label>Senha</label>
-          <h1> {senha} </h1>
 
+          <label>Email</label>
+          <br />
           <input
-            name="Senha"
-            onChange={(evento) => {
-              setSenha(evento.target.value);
-            }}
-          ></input>
+            name="email"
+            value={emailSite}
+            onChange={(evento) => setEmailSite(evento.target.value)}
+          />
+          <br />
+
+          <label>Nome do Site</label>
+          <br />
+          <input
+            name="nomeSite"
+            value={nomeSite}
+            onChange={(evento) => setNomeSite(evento.target.value)}
+          />
+          <br />
+
+          <label>Senha</label>
+          <br />
+          <input
+            type="password"
+            name="senha"
+            value={senha}
+            onChange={(evento) => setSenha(evento.target.value)}
+          />
           <br />
 
           <label>Confirmação da Senha</label>
-          <h1>{confSenha}</h1>
-
-          <input
-            name="senha"
-            onChange={(evento) => {
-              setConfSenha(evento.target.value);
-            }}
-          ></input>
           <br />
           <input
-            type="button"
-            value="Salvar"
-            onClick={() => salvarFavorito()}
+            type="password"
+            name="confSenha"
+            value={confSenha}
+            onChange={(evento) => setConfSenha(evento.target.value)}
           />
-          {/* <button onClick={() => salvarFavorito()}>Salvar</button> */}
+          <br />
+
+          <button type="button" onClick={handleCadastro}>
+            Cadastrar
+          </button>
         </form>
       </div>
-    </>
+      <button onClick={salvarFavorito}>Salvar Cadastros</button>
+    </div>
   );
 };
 
